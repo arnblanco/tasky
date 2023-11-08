@@ -14,6 +14,8 @@ services:
     tty: true
     depends_on:
       - db
+    env_file:
+      - ./.env.dev
     volumes:
       - $PWD:/home
   db:
@@ -39,4 +41,4 @@ services:
 
 networks:
   backend:
-    driver: 'tasky'
+    driver: 'bridge'
