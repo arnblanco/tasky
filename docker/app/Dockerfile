@@ -13,9 +13,9 @@ RUN --mount=type=cache,target=/root/.cache/pip \
     pip install --no-cache-dir -r requirements.txt
 
 COPY . .
-
 #Copy Entry Point
+
 COPY /docker/app/entrypoint.sh .
-RUN chmod 755 ./entrypoint.sh
+RUN chmod 755 /app/docker/app/entrypoint.sh
 
 ENTRYPOINT ["sh", "/app/docker/app/entrypoint.sh"]
