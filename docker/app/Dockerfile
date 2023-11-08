@@ -1,18 +1,21 @@
-# Utiliza una imagen base de Python 3.10
 FROM python:3.10-alpine
+
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1
 
 # Establece un directorio de trabajo en el contenedor
 RUN mkdir /app
 WORKDIR /app
 
 # Instala las dependencias de la aplicación
-COPY /requirements.txt /app/
-RUN pip install -r requirements.txt
+COPY /requirements.txt .
+RUN --mount=type=cache,target=/root/.cache/pip \
+    pip install --no-cache-dir -r requirements.txt
+
+COPY . .
 
 #Copy Entry Point
-COPY /docker/app/entrypoint.sh /app/
-RUN chmod 755 entrypoint.sh
+COPY /docker/app/entrypoint.sh .
+RUN chmod 755 ./entrypoint.sh
 
-COPY . /app/
-
-ENTRYPOINT ["sh", "entrypoint.sh"]
+ENTRYPOINT ["sh", "/app/docker/app/entrypoint.sh"]

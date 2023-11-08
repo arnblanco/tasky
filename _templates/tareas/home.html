@@ -1,0 +1,44 @@
+{% extends "layout/website.html" %}
+
+{% block content %}
+    <div class="container">
+        <h1 class="mt-5">Mis Tareas</h1>
+
+        <!-- Formulario para agregar una nueva tarea -->
+        <div class="row mt-3">
+            <div class="col-md-6">
+                <form method="post" class="mb-3">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="{{ form.titulo.id_for_label }}" class="form-label">Título:</label>
+                        {{ form.titulo }}
+                    </div>
+                    <div class="mb-3">
+                        <label for="{{ form.email.id_for_label }}" class="form-label">Correo Electrónico:</label>
+                        {{ form.email }}
+                    </div>
+                    <div class="mb-3">
+                        <label for="{{ form.descripcion_larga.id_for_label }}" class="form-label">Descripción Larga:</label>
+                        {{ form.descripcion_larga }}
+                    </div>
+                    <button type="submit" class="btn btn-primary">Agregar Tarea</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Listado de tareas existentes -->
+        <div class="row mt-3">
+            <div class="col-md-6">
+                <ul class="list-group">
+                    {% for tarea in tareas %}
+                        <li class="list-group-item">
+                            {{ tarea.titulo }}
+                            <a href="{% url 'editar_tarea' tarea.id %}" class="btn btn-warning btn-sm float-end me-2">Editar</a>
+                            <a href="{% url 'eliminar_tarea' tarea.id %}" class="btn btn-danger btn-sm float-end me-2">Eliminar</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}
