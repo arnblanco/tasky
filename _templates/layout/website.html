@@ -1,8 +1,20 @@
-<html>
-    <head>
+{% load django_bootstrap5 %}
 
-    </head>
-    <body>
-        {% block content %}{% endblock %}
-    </body>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Tasky</title>
+    {% bootstrap_css %}
+  </head>
+  <body>
+    {% include 'layout/tools/header.html' %}
+
+    <div class="container mt-5">{% block content %}{% endblock %}</div>
+
+    {% include 'layout/tools/footer.html' %}
+
+    {% bootstrap_javascript %}
+  </body>
 </html>

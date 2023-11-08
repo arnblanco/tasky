@@ -2,10 +2,10 @@
 {% load django_bootstrap5 %}
 
 {% block content %}
-    <form method="post" action="{% url 'auth:login' %}" class="form">
+    <form method="post" action="{% url 'auth:signup' %}" class="form">
         {% csrf_token %}
         {% bootstrap_form form %}
 
-        {% bootstrap_button button_type="submit" content="Login" %}
+        {% bootstrap_button button_type="submit" content="Signup" %}
     </form>
 {% endblock %}

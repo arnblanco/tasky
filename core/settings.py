@@ -63,6 +63,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     #APP's Liberiras adicionales
+    'django_bootstrap5',
 
     #APP's Propias
     '_apps.website',
@@ -122,7 +123,6 @@ LOGIN_URL = '/'
 
 #Authentications Backends
 AUTHENTICATION_BACKENDS = [
-    'django.contrib.auth.backends.RemoteUserBackend',
     'django.contrib.auth.backends.ModelBackend',
 ]
 
