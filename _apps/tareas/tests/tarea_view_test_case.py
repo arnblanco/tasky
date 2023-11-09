@@ -31,33 +31,3 @@ class TareaViewTestCase(TestCase):
         # Verifica que la tarea creada esté presente en la lista
         response = self.client.get(reverse('tarea'))
         self.assertContains(response, 'Nueva Tarea')
-
-    def test_editar_tarea(self):
-        # Crea una tarea de prueba
-        tarea = Tarea.objects.create(user=self.user, titulo='Tarea a editar', email='editar@example.com', descripcion='Descripción de la tarea a editar')
-
-        # Realiza una solicitud PUT para editar la tarea
-        self.client.login(username='testuser', password='testpassword')
-        response = self.client.put(reverse('tarea'), {'titulo': 'Tarea editada', 'email': 'editada@example.com', 'descripcion': 'Descripción editada'}, tarea.id)
-
-        # Verifica que la tarea se haya editado correctamente y que la vista redirija a la página de listado de tareas
-        self.assertEqual(response.status_code, 302)
-
-        # Verifica que la tarea editada esté presente en la lista
-        response = self.client.get(reverse('tarea'))
-        self.assertContains(response, 'Tarea editada')
-
-    def test_eliminar_tarea(self):
-        # Crea una tarea de prueba
-        tarea = Tarea.objects.create(user=self.user, titulo='Tarea a eliminar', email='eliminar@example.com', descripcion='Descripción de la tarea a eliminar')
-
-        # Realiza una solicitud DELETE para eliminar la tarea
-        self.client.login(username='testuser', password='testpassword')
-        response = self.client.delete(reverse('tarea'), {}, tarea.id)
-
-        # Verifica que la tarea se haya eliminado correctamente y que la vista redirija a la página de listado de tareas
-        self.assertEqual(response.status_code, 302)
-
-        # Verifica que la tarea eliminada no esté presente en la lista
-        response = self.client.get(reverse('tarea'))
-        self.assertNotContains(response, 'Tarea a eliminar')

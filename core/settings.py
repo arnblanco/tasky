@@ -64,6 +64,7 @@ INSTALLED_APPS = [
 
     #APP's Liberiras adicionales
     'django_bootstrap5',
+    'rest_framework',
 
     #APP's Propias
     '_apps.website',

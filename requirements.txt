@@ -5,3 +5,4 @@ django-bootstrap5==23.3
 coverage==7.3.2
 celery==5.3.4
 redis==5.0.1
+djangorestframework=3.14.0

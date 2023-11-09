@@ -1,5 +1,8 @@
 from django.contrib.auth.models import User
 from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from _tasks.send_email import send_mail
 
 # Create your models here.
 class Tarea(models.Model):
@@ -14,3 +17,14 @@ class Tarea(models.Model):
 
 	def __str__(self):
 		return '%s' % self.titulo
+
+
+@receiver(post_save, sender=Tarea)
+def send_email_notification(sender, instance, created, **kwargs):
+	if created:
+		send_mail(
+			[instance.email,],
+			'Nueva Tarea',
+			'mailing/nueva-tarea.html',
+			{'data': instance}
+		)

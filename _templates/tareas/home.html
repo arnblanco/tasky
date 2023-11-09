@@ -1,4 +1,6 @@
 {% extends "layout/website.html" %}
+{% load static %}
+{% load django_bootstrap5 %}
 
 {% block content %}
     <div class="container">
@@ -7,34 +9,23 @@
         <!-- Formulario para agregar una nueva tarea -->
         <div class="row mt-3">
             <div class="col-md-6">
-                <form method="post" class="mb-3">
+                <form method="post" class="form">
                     {% csrf_token %}
-                    <div class="mb-3">
-                        <label for="{{ form.titulo.id_for_label }}" class="form-label">Título:</label>
-                        {{ form.titulo }}
-                    </div>
-                    <div class="mb-3">
-                        <label for="{{ form.email.id_for_label }}" class="form-label">Correo Electrónico:</label>
-                        {{ form.email }}
-                    </div>
-                    <div class="mb-3">
-                        <label for="{{ form.descripcion_larga.id_for_label }}" class="form-label">Descripción Larga:</label>
-                        {{ form.descripcion_larga }}
-                    </div>
-                    <button type="submit" class="btn btn-primary">Agregar Tarea</button>
+                    {% bootstrap_form form %}
+            
+                    {% bootstrap_button button_type="submit" content="Guardar" %}
                 </form>
             </div>
-        </div>
-
-        <!-- Listado de tareas existentes -->
-        <div class="row mt-3">
+            
             <div class="col-md-6">
                 <ul class="list-group">
                     {% for tarea in tareas %}
-                        <li class="list-group-item">
-                            {{ tarea.titulo }}
-                            <a href="{% url 'editar_tarea' tarea.id %}" class="btn btn-warning btn-sm float-end me-2">Editar</a>
-                            <a href="{% url 'eliminar_tarea' tarea.id %}" class="btn btn-danger btn-sm float-end me-2">Eliminar</a>
+                        <li 
+                            class="list-group-item"
+                        >
+                            {{ tarea.titulo }}: <small>{{ tarea.descripcion }}</small>
+                            <a href="{% url 'tareas:editar' tarea.id %}" data-action="edit" class="btn btn-warning btn-sm float-end me-2">Editar</a>
+                            <a href="{% url 'tareas:eliminar' tarea.id %}" data-action="delete" class="btn btn-danger btn-sm float-end me-2">Eliminar</a>
                         </li>
                     {% endfor %}
                 </ul>

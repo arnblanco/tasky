@@ -1,12 +1,10 @@
 from django.contrib.auth.decorators import login_required
-from django.views.generic import View
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
+from django.views import View
 
-from .models import Tarea
 from .forms import TareaForm
 
-@login_required
 class TareaView(View):
     template_name = 'tareas/home.html'
 
@@ -31,22 +29,24 @@ class TareaView(View):
 
         return render(request, self.template_name, {'tareas': tareas, 'form': form})
 
-    def put(self, request, tarea_id):
-        user = request.user
-        tarea = get_object_or_404(Tarea, pk=tarea_id)
-        form = TareaForm(request.POST, instance=tarea)
+@login_required
+def editar_tarea(request, pk, template_name='tareas/editar.html'):
+    user = request.user
+    tarea = get_object_or_404(user.tarea_set, pk=pk)
+    form = TareaForm(instance=tarea)
 
+    if request.POST:
+        form = TareaForm(request.POST, instance=tarea)
         if form.is_valid():
             form.save()
             return redirect(reverse('tareas:home'))
-        
-        tareas = user.tarea_set.all()
-        
-        return render(request, self.template_name, {'tareas': tareas, 'form': form})
+    
+    return render(request, template_name, {'form': form})
 
-    def delete(self, request, tarea_id):
-        user = request.user
-        tarea = get_object_or_404(user.tarea_set, pk=tarea_id)
-        tarea.delete()
-        
-        return redirect(reverse('tareas:home'))
+@login_required
+def eliminar_tarea(request, pk):
+    user = request.user
+    tarea = get_object_or_404(user.tarea_set, pk=pk)
+    tarea.delete()
+    
+    return redirect(reverse('tareas:home'))
