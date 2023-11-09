@@ -34,6 +34,7 @@ EMAIL_HOST_USER = 'EMAIL_HOST_USER' in os.environ and os.environ['EMAIL_HOST_USE
 EMAIL_HOST_PASSWORD = 'EMAIL_HOST_PASSWORD' in os.environ and os.environ['EMAIL_HOST_PASSWORD'] or ''
 EMAIL_PORT = 'EMAIL_PORT' in os.environ and os.environ['EMAIL_PORT'] or ''
 
+
 # #############################################################################
 # AWS KEYS CONFIG
 # #############################################################################
@@ -65,6 +66,7 @@ INSTALLED_APPS = [
     #APP's Liberiras adicionales
     'django_bootstrap5',
     'rest_framework',
+    'rest_framework.authtoken',
 
     #APP's Propias
     '_apps.website',
@@ -101,11 +103,17 @@ ROOT_URLCONF = 'core.urls'
 WSGI_APPLICATION = 'core.wsgi.application'
 
 #Redis & Celery Configuration
-CELERY_BROKER_URL = 'redis://redis:6379/0'
+CELERY_BROKER_URL = 'rediss://redis:6379/0'
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 
+#Rest Framework Configuration
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ],
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators

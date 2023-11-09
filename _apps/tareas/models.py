@@ -6,11 +6,12 @@ from _tasks.send_email import send_mail
 
 # Create your models here.
 class Tarea(models.Model):
-	user = models.ForeignKey(User, on_delete=models.CASCADE)
+	user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
 
 	titulo = models.CharField(max_length=128, null=False, blank=False)
 	email = models.EmailField(max_length=128, null=False, blank=False)
 	descripcion = models.TextField(null=False, blank=False)
+	fecha_vencimiento = models.DateTimeField(null=True, blank=True)
 	
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now=True)
