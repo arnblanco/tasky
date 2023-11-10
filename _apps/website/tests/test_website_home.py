@@ -1,13 +1,13 @@
-from django.test import TestCase
+"""Website home view test"""
 from django.urls import reverse
-from django.contrib.auth.models import User
+from django.test import TestCase
 
 
 class WebsiteHomeViewTestCase(TestCase):
-    def setUp(self):
-        return True
+    """Home view test"""
 
     def test_website_home_view_get(self):
+        """Home get method test"""
         response = self.client.get(reverse('website:home'))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'website/home.html')

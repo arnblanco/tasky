@@ -49,7 +49,7 @@ SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET' in os.envi
 
 # Debug and Host Configurations
 DEBUG = True
-ALLOWED_HOSTS = ['localhost', 'localhost:8000']
+ALLOWED_HOSTS = ['localhost', 'localhost:8000', 'tasky-demo-lb-1711423244.us-west-2.elb.amazonaws.com']
 
 
 # Application definition

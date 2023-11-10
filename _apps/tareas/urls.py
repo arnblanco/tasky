@@ -1,6 +1,7 @@
+"""Tareas app urls"""
 from django.contrib.auth.decorators import login_required
 from django.urls import path
-from .views import *
+from .views import TareaView, editar_tarea, eliminar_tarea
 
 urlpatterns = [
     path('', login_required(TareaView.as_view()), name='home'),
