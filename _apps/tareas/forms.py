@@ -8,3 +8,9 @@ class TareaForm(forms.ModelForm):
         """Tareas meta configuration"""
         model = Tarea
         fields = ['titulo', 'email', 'descripcion', 'fecha_vencimiento']
+        widgets = {
+            'titulo': forms.TextInput(attrs={'autocomplete': 'off'}),
+            'email': forms.EmailInput(attrs={'autocomplete': 'off'}),
+            'descripcion': forms.Textarea(attrs={'autocomplete': 'off'}),
+            'fecha_vencimiento': forms.DateTimeInput(attrs={'autocomplete': 'off', 'placeholder': 'YYYY-MM-DD HH:MM'}),
+        }

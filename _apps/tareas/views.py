@@ -1,5 +1,6 @@
 """Tareas app views"""
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.views import View
@@ -9,6 +10,7 @@ from .forms import TareaForm
 class TareaView(View):
     """Tareas view"""
     template_name = 'tareas/home.html'
+    items_per_page = 2
 
     def get(self, request):
         """Get method"""
@@ -16,7 +18,17 @@ class TareaView(View):
         tareas = user.tarea_set.all()
         form = TareaForm()
 
-        return render(request, self.template_name, {'tareas': tareas, 'form': form})
+        paginator = Paginator(tareas, self.items_per_page)
+        page = request.GET.get('page', 1)
+
+        try:
+            tareas_paginadas = paginator.page(page)
+        except PageNotAnInteger:
+            tareas_paginadas = paginator.page(1)
+        except EmptyPage:
+            tareas_paginadas = paginator.page(paginator.num_pages)
+
+        return render(request, self.template_name, {'tareas': tareas_paginadas, 'form': form})
 
     def post(self, request):
         """Post method"""

@@ -29,6 +29,30 @@
                         </li>
                     {% endfor %}
                 </ul>
+
+                <ul class="pagination justify-content-center mt-4">
+                    {% if tareas.has_previous %}
+                      <li class="page-item">
+                        <a class="page-link" href="{% url 'tareas:home' %}?page={{ tareas.previous_page_number }}" aria-label="Anterior">
+                          <span aria-hidden="true">&laquo;</span>
+                        </a>
+                      </li>
+                    {% endif %}
+              
+                    {% for page_num in tareas.paginator.page_range %}
+                      <li class="page-item {% if tareas.number == page_num %}active{% endif %}">
+                        <a class="page-link" href="{% url 'tareas:home' %}?page={{ page_num }}">{{ page_num }}</a>
+                      </li>
+                    {% endfor %}
+              
+                    {% if tareas.has_next %}
+                      <li class="page-item">
+                        <a class="page-link" href="{% url 'tareas:home' %}?page={{ tareas.next_page_number }}" aria-label="Siguiente">
+                          <span aria-hidden="true">&raquo;</span>
+                        </a>
+                      </li>
+                    {% endif %}
+                  </ul>
             </div>
         </div>
     </div>

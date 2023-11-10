@@ -135,6 +135,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 #Auth Login options
 LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
 LOGIN_URL = '/'
 
 #Authentications Backends
